@@ -25,7 +25,7 @@ The source workbook is `HVAC_CapEx_Final_Validated.xlsx`. Values were read from 
 | C sensitivity matrix | Scenarios!D44:H48 |
 | Break-even tariff and capital | Scenarios!E51:E52 |
 
-All money is USD. Year 0 is December 31, 2026. Years 1–10 end on December 31, 2027–2036. Dated NPV uses actual days/365, including leap days, and includes Year 0 once. Chart paths are not smoothed. Display rounding uses nearest dollar, one decimal for energy reduction, three decimals for millions on the NPV chart. Exact original cached values remain in JSON.
+All money is USD. Year 0 is December 31, 2026. Years 1–10 end on December 31, 2027–2036. Dated NPV uses actual days/365, including leap days, and includes Year 0 once. Chart paths are not smoothed. Display rounding uses nearest dollar, one decimal for energy reduction, exact dollars on the NPV chart; compact monetary values in millions in the mobile financial table (exact values remain available to assistive technology). Exact original cached values remain in JSON.
 
 Sensitivity: `C NPV = energyPV × electricityPrice + maintenancePV + capitalPV × initialCostMultiplier + fixedPV`. CapitalPV includes the initial outlay and related initial tax shields. Other realization factors and the discount rate remain at base; future capital is fixed. This reproduces all 25 original grid cells. The sliders are hypothetical sensitivities, not estimated probabilities or forecasts.
 
@@ -44,3 +44,7 @@ The website does not claim measured savings, a surveyed building, verified equip
 B's 37.7% and C's 15.7% reductions are **HVAC electricity only**. Including 6,000,000 unchanged kWh makes whole-building electricity reductions 12.7% and 5.3%; unchanged gas is outside those percentages. Demand-charge savings, incentives and carbon penalties are not inserted into investment cash flows. The emissions screen is incomplete for 2035–2036 and is not proof of compliance.
 
 The 10-year period is a planning window, not full asset life. No terminal value or later tax benefits are added. The conclusion remains: investigate C further, withhold unconditional approval, and substantiate costs, performance, baseline capital, leases and tax treatment.
+
+## Recruiter-focused redesign
+
+The redesign changes the reading order, presentation and disclosure of existing content. `site/data.json`, `site/model.js`, the original ZIP and all eight documents remain byte-for-byte identical to the first delivered version. The NPV comparison uses a fixed −$4m to +$1m scale in every scenario, with exact dollar labels outside the bars. The cumulative cash-flow chart remains a secondary exploration. Core library files are the executive summary, model, engineering analysis and slides; the project guide and three validation/audit reports are secondary. No source calculations, results or recommendation changed.

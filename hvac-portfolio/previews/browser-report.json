@@ -1,0 +1,115 @@
+{
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "overflow": false,
+      "interactions": "passed"
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "overflow": false,
+      "interactions": "passed"
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "overflow": false,
+      "interactions": "passed"
+    },
+    {
+      "name": "narrow-mobile",
+      "width": 320,
+      "overflow": false,
+      "interactions": "passed"
+    }
+  ],
+  "functional": [
+    "first-screen findings and comparison; four core and four secondary documents",
+    "all disclosures and interactive controls at four widths",
+    "all scenario NPV labels match original data on one fixed scale",
+    "responsive cash-flow chart with exact point labels",
+    "keyboard sliders, disclosures, PDF modal Escape and focus return",
+    "all anchor targets and sticky header navigation",
+    "all eight source document hashes and original ZIP response",
+    "actual browser-triggered ZIP and Excel downloads",
+    "production files and build manifest; no HTTP or browser errors"
+  ],
+  "axe": [
+    {
+      "viewport": "desktop",
+      "state": "default",
+      "violations": [],
+      "passes": 30
+    },
+    {
+      "viewport": "desktop",
+      "state": "document dialog",
+      "violations": [],
+      "passes": 35
+    },
+    {
+      "viewport": "desktop",
+      "state": "all details expanded",
+      "violations": [],
+      "passes": 33
+    },
+    {
+      "viewport": "tablet",
+      "state": "default",
+      "violations": [],
+      "passes": 30
+    },
+    {
+      "viewport": "tablet",
+      "state": "document dialog",
+      "violations": [],
+      "passes": 35
+    },
+    {
+      "viewport": "tablet",
+      "state": "all details expanded",
+      "violations": [],
+      "passes": 34
+    },
+    {
+      "viewport": "mobile",
+      "state": "default",
+      "violations": [],
+      "passes": 29
+    },
+    {
+      "viewport": "mobile",
+      "state": "document dialog",
+      "violations": [],
+      "passes": 35
+    },
+    {
+      "viewport": "mobile",
+      "state": "all details expanded",
+      "violations": [],
+      "passes": 34
+    },
+    {
+      "viewport": "narrow-mobile",
+      "state": "default",
+      "violations": [],
+      "passes": 29
+    },
+    {
+      "viewport": "narrow-mobile",
+      "state": "document dialog",
+      "violations": [],
+      "passes": 35
+    },
+    {
+      "viewport": "narrow-mobile",
+      "state": "all details expanded",
+      "violations": [],
+      "passes": 34
+    }
+  ],
+  "browser_errors": [],
+  "http_failures": []
+}

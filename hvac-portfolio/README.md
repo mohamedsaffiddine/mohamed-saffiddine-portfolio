@@ -1,6 +1,6 @@
 # Manhattan HVAC investment portfolio
 
-A complete, independent static website for Mohamed Saffiddine’s hypothetical Manhattan HVAC feasibility study. Built from the supplied eight-file project, with original documents preserved. No client engagement, measured performance or investment approval is implied.
+A focused UI/UX redesign of Mohamed Saffiddine’s existing Manhattan HVAC feasibility portfolio. It prioritizes the objective, A/B/C results and conditional recommendation; separates methodology, financials, scenarios, recommendation and documents; and places supporting detail behind native disclosures. All original project materials, cached numerical data and financial helpers are preserved. No client engagement, measured performance or investment approval is implied.
 
 ## Run locally
 
@@ -25,19 +25,22 @@ python3 -m http.server 8002 --directory dist
 
 `build.py` verifies all original document hashes, replaces only this project's generated `dist/` directory and copies the complete standalone site. `dist/build-manifest.json` records production file SHA-256 hashes. No bundler, CDN, external font, analytics or remote API is required.
 
-## Deploy to Cloudflare Pages
+## Update the existing Cloudflare Pages website
 
-**Direct Upload (simplest):** run the build, then use Cloudflare Pages → create a project → Direct Upload. Upload the **contents of `dist/`**, with `index.html` at the upload root. Do not upload the source ZIP as the website. This is a static project; no Workers bindings or environment variables are needed. Cloudflare’s account/project creation is performed in your own account.
+The existing website is `https://manhattan-hvac-portfolio.pages.dev/`. This redesign does **not** create a different project or change the live deployment automatically.
 
-**Git-connected Pages:** choose the repository, then configure:
+1. Run `python3 build.py` from this directory.
+2. Download `Manhattan_HVAC_Redesigned_Cloudflare_Pages.zip` from this branch’s `downloads/` folder. This ZIP has `index.html` at its root and contains the complete tested production output.
+3. In Cloudflare **Workers & Pages**, open the existing **manhattan-hvac-portfolio** Pages project.
+4. In its **Deployments** area, choose **Create a new deployment** (or the upload-new-deployment action shown in the dashboard).
+5. Select the **Production** environment, upload the redesigned Pages ZIP and deploy. Use the existing project; do not delete it or start a second project.
+6. Confirm the existing URL now shows “Manhattan HVAC modernization study.” Check the scenario buttons, PDF previews and Excel/ZIP downloads on that HTTPS origin. The previous deployment remains available for rollback in Cloudflare’s deployment history.
 
-- Production branch: your intended branch, usually `main`.
-- Root directory: `hvac-portfolio` when using the current repository layout.
-- Framework preset: None.
-- Build command: `python3 build.py`.
-- Build output directory: `dist` (relative to the root directory above).
+If uploading a folder, upload the contents of `dist/` with `index.html` at the root. Do not upload the full source archive or the original study ZIP as website files. There are no backend bindings, secrets or runtime environment variables. The app uses relative asset URLs and preserves `#main`, `#engineering`, `#investment`, `#sensitivity`, `#evidence` and `#library` anchors. `#recommendation` is a new anchor.
 
-If you put the contents of this project at a new repository's root, leave the root-directory setting empty. Python 3 must be available in the build image. `site/_headers` is copied into `dist` and supplies security headers on Pages. The site has no client-side routes or rewrite requirement. After deployment, confirm the homepage, selectors, PDF preview and XLSX/ZIP downloads on the deployed HTTPS origin. No deployment has been performed as part of this delivery.
+**Optional Git-connected build:** framework None; root directory `hvac-portfolio`; build command `python3 build.py`; output directory `dist`. Use your intended deployment branch. This is an alternative to the current manual upload workflow, not a required migration. Cloudflare’s build image needs Python 3. If this folder is placed at a repository root, leave the root-directory setting empty.
+
+`site/_headers` is copied into `dist` and preserves the existing Pages security headers. There are no client-side routes or rewrite requirements. No live deployment has been changed by the redesign work.
 
 ## Structure
 
@@ -45,7 +48,7 @@ If you put the contents of this project at a new repository's root, leave the ro
 site/
   index.html                 Semantic, responsive single-page case study
   styles.css                 Design, responsive rules, focus and print styles
-  app.js                     Charts, selectors, sensitivity controls and document library
+  app.js                     Responsive charts, progressive disclosure, selectors and document library
   model.js                   Small pure financial calculation helpers
   data.json                  Original cached workbook data and document checksum metadata
   _headers                   Cloudflare Pages HTTP response headers
@@ -59,7 +62,7 @@ VALIDATION.md                Checks actually executed and testing limitations
 requirements-test.txt        Optional browser testing dependency
 tests/model.test.mjs         Financial, engineering and preservation checks
 tests/browser.py             Production browser checks and screenshots
-artifacts/                   Generated browser report and screenshots (included in delivery ZIP)
+artifacts/                   Generated browser reports and screenshots; redesign outputs in artifacts/redesign/
 dist/                        Production output (included in delivery ZIP)
 ```
 
@@ -97,7 +100,7 @@ npm install --prefix /tmp/hvac-a11y --cache /tmp/hvac-npm-cache axe-core@4.11.0 
 AXE_SCRIPT=/tmp/hvac-a11y/node_modules/axe-core/axe.min.js python3 tests/browser.py
 ```
 
-Browser checks cover desktop (1440), tablet (768), mobile (390) and narrow mobile (320 pixels); selectors, charts, keyboard inputs/disclosures, PDF dialogs, navigation, document hashes and an actual ZIP download. Tables and the mobile cash-flow chart scroll within their own keyboard-focusable regions. Reduced-motion preferences are respected. Original PDF rendering depends on the browser’s PDF viewer; open/download alternatives are always provided.
+Browser checks cover desktop (1440), tablet (768), mobile (390) and narrow mobile (320 pixels); default/expanded disclosures, exact chart values and scales, keyboard controls, PDF dialogs, navigation, document hashes, and actual ZIP/Excel downloads. The base financial comparison fits on phones using compact amounts in millions while keeping exact source values accessible to assistive technology; the cash-flow chart adapts its ticks and geometry to the viewport. Detailed tables remain in keyboard-focusable scrolling regions. Reduced-motion preferences are respected. Accessibility reports and screenshots are saved in `artifacts/redesign/`. Original PDF rendering depends on the browser’s PDF viewer; open/download alternatives are always provided.
 
 ## Accessibility and boundaries
 

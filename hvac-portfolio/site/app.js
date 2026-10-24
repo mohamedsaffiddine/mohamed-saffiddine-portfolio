@@ -3,7 +3,6 @@ const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const integer = number => new Intl.NumberFormat('en-US', {maximumFractionDigits:0}).format(number);
 const money = (number, signed = true) => `${number < 0 ? '−' : number > 0 && signed ? '+' : ''}$${integer(Math.abs(number))}`;
-const million = number => `${number < 0 ? '−' : number > 0 ? '+' : ''}$${(Math.abs(number) / 1e6).toFixed(3)}m`;
 const press = (selector, active) => $$(selector).forEach(button => button.setAttribute('aria-pressed', String(button === active)));
 const components = {
  chillers: {title:'Chillers / make the same cooling with less electricity', text:'A keeps both existing units. B replaces them; C retains and rebuilds them. The model uses assumed plant-level kW/ton curves, not manufacturer-certified selections.'},
@@ -28,63 +27,89 @@ try {
  function energy(boundary) {
   const building = boundary === 'building';
   $('#other-legend').hidden = !building;
-  $('#energy-caption').textContent = `${building ? 'Whole-building' : 'HVAC'} electricity · million kWh/year · equal cooling service`;
+  $('#energy-caption').textContent = `${building ? 'Whole-building' : 'HVAC'} electricity · kWh/year · equal cooling service`;
   const max = 3043500 + (building ? 6000000 : 0);
   $('#energy-chart').innerHTML = ['A','B','C'].map((key, index) => {
    const values = [...data.energy[key], ...(building ? [6000000] : [])];
    const total = values.reduce((a,b) => a+b,0);
    const saved = (max-total)/max*100;
-   return `<div class="energy-row"><div class="energy-row-head"><span>${key} / ${['Existing','Full modernization','Partial upgrade'][index]}</span><strong>${(total/1e6).toFixed(3)}m</strong></div><div class="energy-track"><div class="energy-stack" style="width:${total/max*100}%">${values.map((value,i) => `<span class="energy-segment ${classes[i]}" tabindex="0" role="img" aria-label="${key}: ${[...names,'Other electricity'][i]}, ${integer(value)} kWh/year" style="width:${value/total*100}%" title="${[...names,'Other electricity'][i]}: ${integer(value)} kWh/year"></span>`).join('')}</div></div><div class="energy-row-note">${index === 0 ? 'Reference consumption' : `${saved.toFixed(1)}% reduction versus A`}</div></div>`;
+   return `<div class="energy-row"><div class="energy-row-head"><span>${key} / ${['Existing','Full modernization','Partial upgrade'][index]}</span><strong>${integer(total)} <small>kWh</small></strong></div><div class="energy-track"><div class="energy-stack" style="width:${total/max*100}%">${values.map((value,i) => `<span class="energy-segment ${classes[i]}" tabindex="0" role="img" aria-label="${key}: ${[...names,'Other electricity'][i]}, ${integer(value)} kWh/year" style="width:${value/total*100}%" title="${[...names,'Other electricity'][i]}: ${integer(value)} kWh/year"></span>`).join('')}</div></div><div class="energy-row-note">${index === 0 ? 'Reference consumption' : `${saved.toFixed(1)}% reduction versus A`}</div></div>`;
   }).join('');
-  $('#energy-insight').innerHTML = building ? '<strong>Same savings, wider boundary.</strong> Adding unchanged lighting, plugs and lifts makes B / C’s whole-building electricity reductions 12.7% / 5.3%. Gas is unchanged.' : '<strong>75.5% of C’s electricity savings come from auxiliaries.</strong> Fan, pump and tower assumptions need evidence alongside the chiller performance curve.';
+  $('#energy-insight').innerHTML = building ? '<strong>A wider boundary changes the percentage.</strong> B / C reduce whole-building electricity by 12.7% / 5.3%. Gas use is unchanged.' : '<strong>HVAC electricity only.</strong> The 37.7% / 15.7% reductions do not describe all building energy or gas use.';
  }
  $('#energy-table').innerHTML = names.map((name,i) => `<tr><th scope="row">${name}</th>${['A','B','C'].map(k=>`<td>${integer(data.energy[k][i])}</td>`).join('')}</tr>`).join('') + `<tr><th scope="row">Total HVAC</th><td>3,043,500</td><td>1,896,300</td><td>2,566,500</td></tr><tr><th scope="row">Other building electricity</th><td>6,000,000</td><td>6,000,000</td><td>6,000,000</td></tr><tr><th scope="row">Whole-building electricity</th><td>9,043,500</td><td>7,896,300</td><td>8,566,500</td></tr>`;
  $$('[data-boundary]').forEach(b => b.addEventListener('click',()=> {press('[data-boundary]',b);energy(b.dataset.boundary);}));
  energy('hvac');
  function scenario(index) {
-  const s = data.scenarios[index];
-  $('#scenario-assumptions').textContent = `${(s.rate*100).toFixed(1)}% discount · $${s.price.toFixed(2)}/kWh · ${(s.energy*100).toFixed(0)}% energy realization · ${(s.capital*100).toFixed(0)}% cost · ${(s.maintenance*100).toFixed(0)}% maintenance realization`;
-  const left=108,zero=426,width=318;
-  const x = value => zero + value/4e6*width;
-  $('#npv-chart').innerHTML = `<svg viewBox="0 0 520 250" role="img" aria-labelledby="npv-title npv-desc"><title id="npv-title">${s.name} scenario: ten-year NPV</title><desc id="npv-desc">A Existing: $0. B Full: ${money(s.npv.B)}. C Partial: ${money(s.npv.C)}. Discount rate ${(s.rate*100).toFixed(1)}%.</desc>${[-4,-3,-2,-1,0,1].map(t=>`<path d="M${x(t*1e6)} 22V198" stroke="#dde3da" ${t===0?'stroke-width="1.5"':''}/><text x="${x(t*1e6)}" y="225" text-anchor="middle" class="chart-axis">${t===0?'0':t}</text>`).join('')}${['A','B','C'].map((key,i)=>{
-   const value=s.npv[key],y=40+i*60;
-   const end=x(value),w=Math.abs(end-zero);
-   const labelx=value<0?Math.max(left+3,end+8):zero+8;
-   return `<text x="0" y="${y+21}" class="npv-chart-text">${key} / ${['Existing','Full','Partial'][i]}</text><rect x="${Math.min(end,zero)}" y="${y}" width="${Math.max(w,2)}" height="33" fill="${key==='B'?'#e3b795':key==='C'?'#9eb8a3':'#9aaba2'}"/><text x="${labelx}" y="${y+21}" class="npv-value">${million(value)}</text>`;
-  }).join('')}</svg>`;
-  const verdict = [
-   '<strong>C leads, with a narrow cushion.</strong> Its $68,531 NPV is $1.823m above B. The extra $3.331m for B is not justified within this horizon.',
-   '<strong>C still leads.</strong> More favorable price, savings and cost inputs improve both options; full modernization’s NPV remains negative.',
-   '<strong>A leads on incremental NPV.</strong> Both upgrades destroy modeled discounted value under the downside inputs. C’s positive base result is not robust across scenarios.'
+  const scenario = data.scenarios[index];
+  $('#selected-scenario').textContent = `${scenario.name.toUpperCase()} SCENARIO`;
+  $('#scenario-assumptions').innerHTML = [
+   ['Discount rate', `${(scenario.rate * 100).toFixed(1)}%`],
+   ['Electricity price', `$${scenario.price.toFixed(2)}/kWh`],
+   ['Energy realization', `${Math.round(scenario.energy * 100)}%`],
+   ['Initial cost', `${Math.round(scenario.capital * 100)}% of base`],
+   ['Maintenance realization', `${Math.round(scenario.maintenance * 100)}%`]
+  ].map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
+  // One fixed scale in every scenario: −$4m to +$1m, with zero at 80%.
+  const position = value => 80 + value / 5000000 * 100;
+  $('#npv-chart').innerHTML = `<div role="img" aria-label="${scenario.name} ten-year NPV: A ${money(0)}, B ${money(scenario.npv.B)}, C ${money(scenario.npv.C)}">${['A', 'B', 'C'].map((key, i) => {
+   const value = scenario.npv[key];
+   const end = position(value);
+   return `<div class="npv-row"><div class="npv-row-head"><span>${key} / ${['Existing', 'Full', 'Partial'][i]}</span><strong class="${value < 0 ? 'negative' : value > 0 ? 'positive' : ''}">${money(value)}</strong></div><div class="npv-track"><span class="npv-bar ${key.toLowerCase()}" style="left:${Math.min(end, 80)}%;width:${Math.max(Math.abs(end - 80), 0.3)}%"></span></div></div>`;
+  }).join('')}<div class="npv-axis"><span style="left:0">−$4m</span><span style="left:40%">−$2m</span><span style="left:80%">$0</span><span style="left:100%">+$1m</span></div></div>`;
+  const verdicts = [
+   '<strong>C leads, with a narrow cushion.</strong>C creates $68,531 of modeled value, versus a $1.755m shortfall for B. A small change in assumptions can erase C’s surplus.',
+   '<strong>C still leads.</strong>Favorable inputs raise C’s NPV to $621,752. B improves but remains negative at −$514,312.',
+   '<strong>A leads on incremental NPV.</strong>Both upgrades are negative: B −$3,908,537; C −$838,052. The base-case preference for C is conditional.'
   ];
-  $('#scenario-verdict').innerHTML=verdict[index];
+  $('#scenario-verdict').innerHTML = verdicts[index];
  }
  $$('[data-scenario]').forEach(b=>b.addEventListener('click',()=>{press('[data-scenario]',b);scenario(Number(b.dataset.scenario));}));
  scenario(0);
+ let currentCashMode = 'discounted';
+ const smallChart = window.matchMedia('(max-width:650px)');
  function cash(mode) {
-  const values=mode==='discounted'?data.discounted:{B:cumulative(data.cash.B),C:cumulative(data.cash.C)};
-  const min=-5.3,max=1.2,W=1000,H=290,L=55,R=50,T=25,B=40;
-  const x=i=>L+i*(W-L-R)/10;
-  const y=v=>T+(max-v/1e6)/(max-min)*(H-T-B);
-  let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="cash-title cash-desc"><title id="cash-title">${mode==='discounted'?'Discounted':'Undiscounted'} cumulative base cash flows</title><desc id="cash-desc">Year 0 to Year 10. B ends at ${money(values.B[10])}; C ends at ${money(values.C[10])}. Exact yearly values are in the expandable table below.</desc>`;
-  for(const v of [-5,-4,-3,-2,-1,0,1]) svg+=`<path d="M${L} ${y(v*1e6)}H${W-R}" stroke="${v===0?'#809a91':'#e1e6dc'}" ${v===0?'stroke-dasharray="4 4"':''}/><text x="${L-12}" y="${y(v*1e6)+4}" text-anchor="end" class="chart-axis">${v}</text>`;
-  for(let i=0;i<=10;i++) svg+=`<text x="${x(i)}" y="${H-15}" text-anchor="middle" class="chart-axis">${i===0?'2026':2026+i}</text>`;
-  for(const key of ['B','C']) {
-   const color=key==='B'?'#bc744f':'#447866';
-   svg+=`<polyline points="${values[key].map((v,i)=>`${x(i)},${y(v)}`).join(' ')}" fill="none" stroke="${color}" stroke-width="2.5"/>`;
-   values[key].forEach((v,i)=>{svg+=`<circle class="chart-point" data-key="${key}" data-year="${i}" tabindex="0" role="img" aria-label="${key}, year-end ${2026+i}, ${money(v)}" cx="${x(i)}" cy="${y(v)}" r="3.5" fill="${color}"><title>${key} · ${2026+i}: ${money(v)}</title></circle>`;});
+  currentCashMode = mode;
+  const values = mode === 'discounted' ? data.discounted : {B: cumulative(data.cash.B), C: cumulative(data.cash.C)};
+  const mobile = smallChart.matches;
+  const min = -5.3, max = 1.2, W = mobile ? 360 : 900, H = mobile ? 285 : 295;
+  const L = mobile ? 32 : 50, R = mobile ? 18 : 35, T = 20, B = 35;
+  const x = i => L + i * (W - L - R) / 10;
+  const y = v => T + (max - v / 1e6) / (max - min) * (H - T - B);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="cash-title cash-desc"><title id="cash-title">${mode === 'discounted' ? 'Discounted' : 'Undiscounted'} cumulative base cash flows</title><desc id="cash-desc">Year 0 to Year 10. B ends at ${money(values.B[10])}; C ends at ${money(values.C[10])}. Exact annual values are in the expandable table.</desc>`;
+  for (const value of (mobile ? [-5, -3, -1, 0, 1] : [-5, -4, -3, -2, -1, 0, 1])) {
+   svg += `<path d="M${L} ${y(value * 1e6)}H${W - R}" stroke="${value === 0 ? '#7c9a8c' : '#dce5de'}" ${value === 0 ? 'stroke-dasharray="4 4"' : ''}/><text x="${L - 10}" y="${y(value * 1e6) + 4}" text-anchor="end" class="chart-axis">${value}</text>`;
   }
-  svg+='</svg><div class="chart-tooltip" id="cash-tooltip" aria-live="polite">Focus or hover over a point for its exact value. A table is available below.</div>';
-  $('#cash-chart').innerHTML=svg;
-  $$('.chart-point').forEach(point=>{
-   const show=()=>{$('#cash-tooltip').textContent=`${point.dataset.key==='B'?'B Full modernization':'C Partial upgrade'} · Dec 31, ${2026+Number(point.dataset.year)} · ${money(values[point.dataset.key][Number(point.dataset.year)])}`;};
-   point.addEventListener('focus',show);point.addEventListener('mouseenter',show);
+  for (let i = 0; i <= 10; i += mobile ? 2 : 1) {
+   svg += `<text x="${x(i)}" y="${H - 10}" text-anchor="middle" class="chart-axis">${2026 + i}</text>`;
+  }
+  for (const key of ['B', 'C']) {
+   const color = key === 'B' ? '#a66745' : '#356f5d';
+   svg += `<polyline points="${values[key].map((value, i) => `${x(i)},${y(value)}`).join(' ')}" fill="none" stroke="${color}" stroke-width="2.5"/>`;
+   values[key].forEach((value, i) => {
+    svg += `<circle class="chart-point" data-key="${key}" data-year="${i}" tabindex="0" role="img" aria-label="${key}, year-end ${2026 + i}, ${money(value)}" cx="${x(i)}" cy="${y(value)}" r="${mobile ? 4 : 3.5}" fill="${color}"><title>${key} · ${2026 + i}: ${money(value)}</title></circle>`;
+   });
+  }
+  svg += '</svg><div class="chart-tooltip" id="cash-tooltip" aria-live="polite">Select a point, or use the annual data table, for the exact value.</div>';
+  $('#cash-chart').innerHTML = svg;
+  $$('.chart-point').forEach(point => {
+   const show = () => {
+    $('#cash-tooltip').textContent = `${point.dataset.key === 'B' ? 'B Full modernization' : 'C Partial upgrade'} · Dec 31, ${2026 + Number(point.dataset.year)} · ${money(values[point.dataset.key][Number(point.dataset.year)])}`;
+   };
+   for (const event of ['focus', 'mouseenter', 'click']) point.addEventListener(event, show);
   });
-  $('#cash-caption').textContent=mode==='discounted'?'Discounted at 8.5% using actual days / 365. Year 10 endpoints equal base NPV: B −$1,754,620; C +$68,531.':'Undiscounted, after-tax cumulative cash flow. Year 10 endpoints: B −$101,566; C +$939,131. Nominal recovery is not discounted investment value.';
-  $('#cash-table-caption').textContent=`${mode==='discounted'?'Discounted at 8.5%':'Undiscounted'} cumulative after-tax cash flows · USD`;
-  $('#cash-table').innerHTML=values.B.map((v,i)=>`<tr><th scope="row">${2026+i}${i===0?' (Year 0)':''}</th><td>${money(v)}</td><td>${money(values.C[i])}</td></tr>`).join('');
+  $('#cash-caption').textContent = mode === 'discounted'
+   ? 'Discounted at 8.5% using actual days / 365. Year 10 endpoints equal base NPV: B −$1,754,620; C +$68,531.'
+   : 'Undiscounted, after-tax cumulative cash flow. Year 10 endpoints: B −$101,566; C +$939,131. This is not discounted investment value.';
+  $('#cash-table-caption').textContent = `${mode === 'discounted' ? 'Discounted at 8.5%' : 'Undiscounted'} cumulative after-tax cash flows · USD`;
+  $('#cash-table').innerHTML = values.B.map((value, i) => `<tr><th scope="row">${2026 + i}${i === 0 ? ' (Year 0)' : ''}</th><td>${money(value)}</td><td>${money(values.C[i])}</td></tr>`).join('');
  }
- $$('[data-cash]').forEach(b=>b.addEventListener('click',()=>{press('[data-cash]',b);cash(b.dataset.cash);}));cash('discounted');
+ $$('[data-cash]').forEach(button => button.addEventListener('click', () => {
+  press('[data-cash]', button);
+  cash(button.dataset.cash);
+ }));
+ smallChart.addEventListener('change', () => cash(currentCashMode));
+ cash('discounted');
  function sensitivity() {
   const capital=Number($('#capital').value)/100,price=Number($('#price').value);
   const npv=sensitivityNPV(data.sensitivity,capital,price);
@@ -111,17 +136,32 @@ try {
  }
  $('#close-dialog').addEventListener('click',()=>dialog.close());
  dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
- dialog.addEventListener('close',()=>{$('#pdf-preview').removeAttribute('src');previewButton?.focus();});
- function documents(filter) {
-  const docs=data.documents.filter(d=>filter==='All'||d.category===filter);
-  $('#document-count').textContent=`${docs.length} ${docs.length===1?'file':'files'}`;
-  $('#document-grid').innerHTML=docs.map(doc=>{
-   const ext=doc.file.split('.').pop().toUpperCase();
-   return `<article class="document-card"><div class="doc-meta"><span class="file-icon">${ext}</span><span>${doc.category.toUpperCase()} / ${Math.round(doc.bytes/1024)} KB</span></div><h3>${doc.title}</h3><p>${doc.description}</p><div class="doc-actions">${ext==='PDF'?`<button data-preview="${doc.file}" aria-label="Preview ${doc.title}">Preview PDF <svg class="arrow-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M4 4h8v8"/></svg></button>`:`<span>${doc.pages} ${ext==='XLSX'?'worksheets':'slides'}</span>`}<a href="assets/documents/${doc.file}" download aria-label="Download ${doc.title}">Download ↓</a></div></article>`;
-  }).join('');
-  $$('[data-preview]').forEach(b=>b.addEventListener('click',()=>preview(data.documents.find(d=>d.file===b.dataset.preview),b)));
+ dialog.addEventListener('close',()=>{
+  // A queued close event can arrive after another document has already opened.
+  if (dialog.open) return;
+  $('#pdf-preview').removeAttribute('src');
+  previewButton?.focus();
+ });
+ const primaryFiles = [
+  'Executive_Investment_Summary.pdf',
+  'HVAC_CapEx_Final_Validated.xlsx',
+  'Engineering_Analysis_and_System_Schematic.pdf',
+  'HVAC_Engineering_Financial_Presentation.pptx'
+ ];
+ function documentCard(doc) {
+  const extension = doc.file.split('.').pop().toUpperCase();
+  const units = extension === 'XLSX' ? 'worksheets' : extension === 'PPTX' ? 'slides' : doc.pages === 1 ? 'page' : 'pages';
+  const title = extension === 'XLSX' ? 'Excel financial model' : doc.title;
+  return `<article class="document-card"><div class="doc-heading"><span class="file-icon">${extension}</span><div><h3>${title}</h3><span class="doc-size">${doc.pages} ${units} · ${Math.round(doc.bytes / 1024)} KB</span></div></div><p>${doc.description}</p><div class="doc-actions">${extension === 'PDF'
+   ? `<button data-preview="${doc.file}" aria-label="Preview ${doc.title}">Preview PDF <svg class="arrow-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M4 4h8v8"/></svg></button>`
+   : `<span>${extension === 'XLSX' ? 'Original editable workbook' : 'Editable slides + notes'}</span>`}<a href="assets/documents/${doc.file}" download aria-label="Download ${doc.title}">Download ↓</a></div></article>`;
  }
- $$('[data-filter]').forEach(b=>b.addEventListener('click',()=>{press('[data-filter]',b);documents(b.dataset.filter);}));documents('All');
+ $('#document-grid').innerHTML = primaryFiles.map(file => documentCard(data.documents.find(doc => doc.file === file))).join('');
+ $('#supporting-grid').innerHTML = data.documents.filter(doc => !primaryFiles.includes(doc.file)).map(documentCard).join('');
+ $$('[data-preview]').forEach(button => button.addEventListener('click', () => {
+  preview(data.documents.find(doc => doc.file === button.dataset.preview), button);
+ }));
+
 } catch(error) {
  console.error(error);
  const notice=document.createElement('p');notice.className='load-error';notice.setAttribute('role','alert');
