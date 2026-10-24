@@ -1,0 +1,14 @@
+{
+  "name": "manhattan-hvac-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A source-based engineering and capital investment portfolio; zero runtime dependencies.",
+  "scripts": {
+    "dev": "python3 -m http.server 8001 --bind 0.0.0.0 --directory site",
+    "build": "python3 build.py",
+    "preview": "python3 -m http.server 8002 --bind 0.0.0.0 --directory dist",
+    "test": "node --test tests/model.test.mjs",
+    "test:browser": "python3 tests/browser.py"
+  }
+}

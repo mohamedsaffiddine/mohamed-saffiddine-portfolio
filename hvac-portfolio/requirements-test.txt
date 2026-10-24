@@ -1,0 +1,2 @@
+# Optional, for tests/browser.py only. Not needed to build or run the site.
+playwright==1.62.0
