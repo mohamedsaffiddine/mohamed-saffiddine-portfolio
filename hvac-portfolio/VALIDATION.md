@@ -35,3 +35,7 @@ The live `https://manhattan-hvac-portfolio.pages.dev/` URL was blocked by the cl
 The website tests reproduce the original workbook's cached values and relevant equations. They do not recalculate every Excel formula or rerun the historical audit's complete spreadsheet-control suite. Historical project test counts remain clearly identified as source-report claims. No site performance, tax eligibility, legal compliance or actual investment approval is established.
 
 Safari, Firefox, physical devices and assistive-technology user testing were not performed. Automated accessibility results are not a certification. Cloudflare Pages upload structure and headers are included and verified locally; a newly deployed HTTPS origin must be checked after the user publishes the redesign.
+
+## Headline, contribution and workbook refinements
+
+The follow-up browser checks assert the full requested H1, the explicit contribution statement, the first/primary Excel action, three visible risk cards and a closed technical-evidence disclosure. A further rapid keyboard challenge opened all six PDFs three times at 320px (18 activations), verifying document identity and native focus return after each close. A queued manual focus restoration was removed because it could steal focus from the next activation. Production document hashes and financial source data remain unchanged.

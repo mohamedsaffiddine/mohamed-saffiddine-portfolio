@@ -124,9 +124,7 @@ try {
  $('#sensitivity-table').innerHTML=data.matrix.map((row,i)=>`<tr><th scope="row">${(0.8+i*0.2).toFixed(1)}×</th>${row.map((v,j)=>`<td class="${v>=0?'positive':'negative'} ${i===1&&j===2?'base-cell':''}">${money(v)}</td>`).join('')}</tr>`).join('');
  $('#capex-table').innerHTML=data.capex.map(r=>`<tr><th scope="row">${r.item}</th><td>${money(r.B,false)}</td><td>${money(r.C,false)}</td></tr>`).join('')+'<tr><th scope="row">Contingency (real-property items)</th><td>$450,000</td><td>$149,000</td></tr><tr><th scope="row">Total initial funding</th><td>$5,000,000</td><td>$1,669,000</td></tr>';
  const dialog=$('#document-dialog');
- let previewButton=null;
  function preview(doc,button) {
-  previewButton=button;
   const url=`assets/documents/${doc.file}`;
   $('#dialog-title').textContent=doc.title;
   $('#pdf-preview').title=`${doc.title}: original PDF`;
@@ -140,7 +138,7 @@ try {
   // A queued close event can arrive after another document has already opened.
   if (dialog.open) return;
   $('#pdf-preview').removeAttribute('src');
-  previewButton?.focus();
+  // Native dialog close restores focus; a queued manual focus can steal the next activation.
  });
  const primaryFiles = [
   'Executive_Investment_Summary.pdf',

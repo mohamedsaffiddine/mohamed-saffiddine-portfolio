@@ -34,7 +34,7 @@ The existing website is `https://manhattan-hvac-portfolio.pages.dev/`. This rede
 3. In Cloudflare **Workers & Pages**, open the existing **manhattan-hvac-portfolio** Pages project.
 4. In its **Deployments** area, choose **Create a new deployment** (or the upload-new-deployment action shown in the dashboard).
 5. Select the **Production** environment, upload the redesigned Pages ZIP and deploy. Use the existing project; do not delete it or start a second project.
-6. Confirm the existing URL now shows “Manhattan HVAC modernization study.” Check the scenario buttons, PDF previews and Excel/ZIP downloads on that HTTPS origin. The previous deployment remains available for rollback in Cloudflare’s deployment history.
+6. Confirm the existing URL now shows “Manhattan HVAC Modernization | Engineering & Financial Feasibility Study” Check the scenario buttons, PDF previews and Excel/ZIP downloads on that HTTPS origin. The previous deployment remains available for rollback in Cloudflare’s deployment history.
 
 If uploading a folder, upload the contents of `dist/` with `index.html` at the root. Do not upload the full source archive or the original study ZIP as website files. There are no backend bindings, secrets or runtime environment variables. The app uses relative asset URLs and preserves `#main`, `#engineering`, `#investment`, `#sensitivity`, `#evidence` and `#library` anchors. `#recommendation` is a new anchor.
 

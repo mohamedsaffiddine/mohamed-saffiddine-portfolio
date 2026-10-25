@@ -29,3 +29,7 @@ The production build was rendered in Chromium at desktop, tablet, mobile and nar
 The live URL could not be opened from this cloud runtime: the egress proxy returned HTTP 403 / tunnel connection failure. The review therefore used the existing deployed source rendered locally, and the final checks served the production `dist/` build. No live-origin validation is claimed.
 
 Use `downloads/Manhattan_HVAC_Redesigned_Cloudflare_Pages.zip` to create a new production deployment in the **existing** `manhattan-hvac-portfolio` Cloudflare Pages project. `README.md` contains step-by-step instructions. The previously delivered deployment ZIP is retained separately for reference. GitHub-hosted previews in `previews/` are screenshots, not a live deployment.
+
+## Follow-up refinements
+
+The primary heading now reads “Manhattan HVAC Modernization | Engineering & Financial Feasibility Study,” with matching browser-title metadata. The opening contribution statement explicitly names the engineering energy model, evaluation of three investment alternatives and Excel analysis of NPV, XIRR and payback. “Download Excel Model” is the first, filled primary action; Executive Summary remains next to it as a secondary action. The three visible risks and closed technical-evidence disclosure are retained, with shorter labels. Original numerical data, financial helpers and downloadable source documents remain unchanged.
