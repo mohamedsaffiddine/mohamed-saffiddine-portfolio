@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mohamed Saffiddine | Manufacturing FP&amp;A Excel Project</title>
+  <meta name="description" content="Mohamed Saffiddine, a CUNY City Tech Mechanical Engineering Technology student, explores how sales, costs and working capital affect a manufacturer's profit and cash.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%23245c45'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-size='17' fill='white'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to project</a>
+  <header class="top">
+    <div class="container top-inner">
+      <a class="name" href="#main">Mohamed Saffiddine<span>Engineering &amp; financial analysis · Project portfolio</span></a>
+      <nav aria-label="Main navigation">
+        <a href="#findings">Findings</a>
+        <a href="#method">How I built it</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#files">Downloads</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="project-title">
+      <p class="eyebrow">Independent manufacturing project</p>
+      <h1 id="project-title">Can higher sales support profit and cash?</h1>
+      <p class="about">I’m a Mechanical Engineering Technology student at CUNY City Tech, interested in engineering and financial analysis.</p>
+      <p class="lead">I built a 12-month Excel model for financial planning and analysis (FP&amp;A), connecting sales, production costs and staffing to profit and cash flow. It includes working capital: money tied up in daily operations.</p>
+      <div class="actions">
+        <a class="button" href="#findings">View project findings</a>
+        <a class="button secondary" href="/assets/Northstar_FPA_Operating_Model.xlsx" download>Download Excel model</a>
+      </div>
+      <p class="small">Northstar Components is a fictional manufacturer. 2027 planning case; all company data is simulated.</p>
+    </section>
+
+    <section class="findings" id="findings" aria-labelledby="findings-title">
+      <h2 id="findings-title">Sales beat budget. Earnings and cash fell.</h2>
+      <div class="metrics">
+        <article class="metric">
+          <h3>Revenue vs. budget</h3>
+          <strong class="metric-value" data-result="revenue">+1.9%</strong>
+          <p>Sales reach <strong>$7,030,936</strong>, above the $6,897,150 budget. The extra revenue does not carry through to stronger earnings.</p>
+        </article>
+        <article class="metric">
+          <h3>Operating earnings vs. budget</h3>
+          <strong class="metric-value" data-result="ebitda">−35.0%</strong>
+          <p>EBITDA—earnings before interest, taxes, depreciation and amortization—falls to <strong>$226,663</strong>. Higher production costs and support payroll offset the sales gain.</p>
+        </article>
+        <article class="metric">
+          <h3>Year-end cash remaining</h3>
+          <strong class="metric-value" data-result="cash">$70,717</strong>
+          <p>From <strong>$750,000</strong> opening cash, the balance falls as working capital and equipment use more cash than the operation generates.</p>
+        </article>
+      </div>
+      <p class="source">Full-year outlook = January–June simulated actuals + July–December forecast. Source: Dashboard!D7:G14.</p>
+      <p class="skills-line"><strong>Skills demonstrated:</strong> Excel formulas · forecasting · variance analysis · cash planning · scenario testing</p>
+    </section>
+
+    <section class="section" id="cash" aria-labelledby="cash-heading">
+      <div class="section-intro">
+        <p class="eyebrow">Why it matters</p>
+        <h2 id="cash-heading">Positive earnings do not guarantee enough cash.</h2>
+        <p>The model earns $226,663 before interest, taxes, depreciation and amortization. But more money is needed for customer receivables and inventory, net of supplier credit, as well as equipment.</p>
+      </div>
+      <figure class="chart" aria-labelledby="cash-chart-title">
+        <figcaption>
+          <h3 id="cash-chart-title">Where the opening cash goes</h3>
+          <p class="small">Full-year outlook · USD. Each bar shows a balance or a change in the cash bridge.</p>
+        </figcaption>
+        <div class="axis" aria-hidden="true"><span>$0</span><span>$250k</span><span>$500k</span><span>$750k</span><span>$1m</span></div>
+        <ol class="cash-bridge" aria-label="Cash bridge from opening to year-end balance">
+          <li data-cash-value="750000">
+            <div class="bridge-label"><span>Opening cash</span><strong>$750,000</strong></div>
+            <div class="bridge-track" aria-hidden="true"><span class="bridge-bar opening" style="--start:0%; --size:75%"></span></div>
+          </li>
+          <li data-cash-value="226663">
+            <div class="bridge-label"><span>Add operating earnings (EBITDA)</span><strong>+$226,663</strong></div>
+            <div class="bridge-track" aria-hidden="true"><span class="bridge-bar" style="--start:75%; --size:22.6663%"></span></div>
+          </li>
+          <li data-cash-value="-536946">
+            <div class="bridge-label"><span>Less cash tied up in working capital</span><strong>−$536,946</strong></div>
+            <div class="bridge-track" aria-hidden="true"><span class="bridge-bar cost" style="--start:43.9717%; --size:53.6946%"></span></div>
+          </li>
+          <li data-cash-value="-369000">
+            <div class="bridge-label"><span>Less equipment spending</span><strong>−$369,000</strong></div>
+            <div class="bridge-track" aria-hidden="true"><span class="bridge-bar cost" style="--start:7.0717%; --size:36.9%"></span></div>
+          </li>
+          <li data-cash-value="70717">
+            <div class="bridge-label"><span>Year-end cash</span><strong>$70,717</strong></div>
+            <div class="bridge-track" aria-hidden="true"><span class="bridge-bar ending" style="--start:0%; --size:7.0717%"></span></div>
+          </li>
+        </ol>
+        <p class="chart-note"><strong>The takeaway:</strong> working capital and equipment absorb $905,946, more than the year’s EBITDA. The business uses $679,283 of its opening cash.</p>
+        <p class="source">Source: Cash flow!D22:D29. This simplified cash bridge is before tax and financing; EBITDA itself is not cash flow. <a href="#cash-details">Review monthly balances and the calculation</a>.</p>
+      </figure>
+    </section>
+
+    <section class="section" id="method" aria-labelledby="method-heading">
+      <p class="eyebrow">How I built it</p>
+      <h2 id="method-heading">One set of operating inputs, 12 linked worksheets.</h2>
+      <p class="section-intro">I linked the monthly sales plan to production costs and support staffing, then followed the effects through working capital, equipment spending and cash. The model compares the original budget with an updated outlook.</p>
+      <div class="method-grid">
+        <article>
+          <h3>Build a connected plan</h3>
+          <p>Units and prices drive revenue. Unit costs, hiring and pay assumptions drive expenses. Cross-sheet formulas keep the budget, forecast and cash schedules connected.</p>
+        </article>
+        <article>
+          <h3>Explain what changed</h3>
+          <p>Variance analysis compares results with the budget. I separated the effects of volume, price, material costs, conversion costs and payroll to explain the earnings gap.</p>
+        </article>
+        <article>
+          <h3>Test the model</h3>
+          <p>I tested lower volume and higher material costs, then used 12 reconciliation checks to compare linked calculations. All show OK in the saved workbook.</p>
+        </article>
+      </div>
+      <p class="source">Excel techniques: cross-sheet and mixed cell references, monthly rollforwards, SUM, AVERAGE, IF, ABS, ROUND and SUMPRODUCT. <a href="#formulas-details">See formulas, checks and model scope</a>.</p>
+    </section>
+
+    <section class="section" id="learning" aria-labelledby="learning-heading">
+      <p class="eyebrow">Conclusion &amp; learning</p>
+      <h2 id="learning-heading">Review costs and cash alongside sales.</h2>
+      <div class="conclusion">
+        <div>
+          <p>For this fictional manufacturer, higher revenue is not enough to protect earnings or fund investment. I would investigate material costs, support hiring, customer collections and equipment timing together.</p>
+          <h3>What I learned</h3>
+          <p>A total tells me what happened; a variance bridge helps explain why. Separating profit from cash also makes the funding needs clearer.</p>
+          <p>I learned to keep inputs easy to find and to check that related schedules agree. That makes the model easier to trace and discuss.</p>
+        </div>
+        <div>
+          <h3>What this model cannot tell us</h3>
+          <ul>
+            <li>The company and data are fictional. The results demonstrate analysis, not a real business outcome.</li>
+            <li>One product group, 30-day months and simplified cost and working-capital assumptions limit the detail.</li>
+            <li>The cash forecast excludes tax, interest and financing. There is no depreciation or net-income schedule.</li>
+          </ul>
+          <p class="source">Opening working-capital balances contribute to the large January cash drop and would need validation for a real business. Reconciliation checks establish consistency, not realistic assumptions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="files" id="files" aria-labelledby="files-heading">
+      <p class="eyebrow">Review the actual work</p>
+      <h2 id="files-heading">Open the Excel model.</h2>
+      <p>Start with <strong>Dashboard</strong>, then follow <strong>Assumptions → Budget / Forecast → Variance → Cash flow</strong>. Use Scenario!D7:D9 to change the stress-test inputs.</p>
+      <div class="actions">
+        <a class="button" href="/assets/Northstar_FPA_Operating_Model.xlsx" download>Download Excel model</a>
+        <button type="button" class="text-button" id="print">Print / save this page as PDF</button>
+      </div>
+      <p class="small">Excel workbook · 12 worksheets · 79 KB. The original workbook, formulas and saved results are unchanged. Website figures are a fixed snapshot; editing a downloaded copy will not update this page.</p>
+    </section>
+
+    <section class="evidence" id="evidence" aria-labelledby="evidence-heading">
+      <p class="eyebrow">Supporting technical details</p>
+      <h2 id="evidence-heading">Follow the numbers.</h2>
+      <p class="evidence-intro">Open any section to review the assumptions, tables and calculations behind the findings. Cell references point to the downloadable workbook. Amounts are rounded; small differences can result from rounding.</p>
+<details class="evidence-panel" id="assumptions-details">
+<summary>Assumptions and forecast inputs</summary>
+<div class="evidence-content">
+<h3>The business case</h3><p>Northstar Components represents a manufacturer with one product group. The project tests whether its sales plan can cover production costs, support staff and other operating expenses, while leaving enough cash for equipment and day-to-day operations.</p><p>I used a manufacturing setting because units, material cost and production cost give the financial model a clear operating basis. The aim is to explain why the forecast changes, rather than only report a final profit number.</p>
+<h4>Inputs behind the plan</h4><div class="table-scroll" tabindex="0" role="region" aria-label="Budget assumptions"><table><thead><tr><th>Driver</th><th>Budget assumption</th><th>Why it matters</th></tr></thead><tbody>
+<tr><th scope="row">Annual units</th><td>51,090</td><td>Monthly sales volumes drive revenue and variable costs.</td></tr><tr><th scope="row">Selling price</th><td>$135 per unit</td><td>Multiplied by units to calculate revenue.</td></tr><tr><th scope="row">Material / conversion cost</th><td>$45 / $25 per unit</td><td>Conversion includes direct production labor and variable factory costs.</td></tr><tr><th scope="row">Support staff</th><td>20 opening FTE</td><td>Hires and exits roll forward into payroll.</td></tr><tr><th scope="row">Salary / employer burden</th><td>$84,000 / 20%</td><td>Average paid FTE × monthly salary × burden factor.</td></tr><tr><th scope="row">Other operating expenses</th><td>$55,000/month + 3.5% of sales</td><td>Fixed and variable selling, general and administrative costs (SG&amp;A).</td></tr><tr><th scope="row">Receivable / inventory / payable days</th><td>36 / 42 / 28</td><td>Estimate how much cash is tied up in operations.</td></tr></tbody></table></div>
+<p class="source">Source: Assumptions!D8:D18; Headcount!D8. FTE means full-time equivalent.</p>
+<div class="note"><h4>How the forecast is updated</h4><p>January–June uses fixed observations on the Actuals sheet. July–December assumes 2% more volume, 1% higher prices, 3% higher material cost and 2% higher fixed SG&amp;A than budget. The salary-change input is 0%; hiring is modeled separately in Headcount.</p><p class="source">Source: Assumptions!L22:Q26; Forecast!F6:Q6.</p></div>
+</div>
+</details>
+
+<details class="evidence-panel" id="results-details">
+<summary>Full-year budget versus outlook</summary>
+<div class="evidence-content">
+<h3>Revenue improves. Margins tighten.</h3><p>Budget revenue is 51,090 units × $135 = $6,897,150. The full-year outlook reaches $7,030,936, but support payroll rises by $111,342 and cost of goods sold (COGS) rises by $126,749. These increases explain why EBITDA declines even with higher sales.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Annual budget and forecast results"><table class="numeric"><caption>2027 full-year comparison · USD unless stated</caption><thead><tr><th>Measure</th><th>Budget</th><th>Latest outlook</th><th>Outlook − budget</th></tr></thead><tbody><tr><th scope="row">Revenue</th><td>$6,897,150</td><td>$7,030,936</td><td>+$133,786</td></tr><tr><th scope="row">Cost of goods sold</th><td>$3,576,300</td><td>$3,703,049</td><td>+$126,749</td></tr><tr><th scope="row">Gross profit</th><td>$3,320,850</td><td>$3,327,888</td><td>+$7,038</td></tr><tr><th scope="row">Gross margin</th><td>48.1%</td><td>47.3%</td><td>-0.82 pp</td></tr><tr><th scope="row">Support payroll</th><td>$2,070,600</td><td>$2,181,942</td><td>+$111,342</td></tr><tr><th scope="row">SG&amp;A</th><td>$901,400</td><td>$919,283</td><td>+$17,883</td></tr><tr><th scope="row">EBITDA</th><td>$348,850</td><td>$226,663</td><td>−$122,187</td></tr><tr><th scope="row">EBITDA margin</th><td>5.1%</td><td>3.2%</td><td>-1.83 pp</td></tr><tr><th scope="row">Support staff at year-end (FTE)</th><td>21</td><td>23</td><td>+2</td></tr></tbody></table></div><p class="source">Source: Budget and Forecast, annual totals in column D; Headcount!D12 and D27. A positive cost difference means higher expense. Margin changes are percentage points (pp).</p><figure class="workbook-view"><a href="/assets/dashboard.png" target="_blank" rel="noopener"><img src="/assets/dashboard.png" alt="Actual workbook dashboard showing budget and latest outlook, including revenue, EBITDA and ending cash." loading="lazy" width="1200" height="420"></a><figcaption>Dashboard excerpt from the attached workbook. Select the image for the full-size view.</figcaption></figure>
+</div>
+</details>
+
+<details class="evidence-panel" id="variance-details">
+<summary>First-half EBITDA variance bridge</summary>
+<div class="evidence-content">
+<h3>Why first-half EBITDA missed budget</h3><p>For January–June, revenue is $32,477 above plan, while EBITDA is $64,545 below plan. A driver bridge separates the changes in volume, price, unit cost, payroll and SG&amp;A.</p><div class="two-col"><div><div class="table-scroll" tabindex="0" role="region" aria-label="January to June EBITDA variance bridge"><table class="numeric"><caption>January–June EBITDA bridge · USD</caption><thead><tr><th>Driver</th><th>Profit impact</th></tr></thead><tbody><tr class="total"><th scope="row">Budget EBITDA</th><td>$218,476</td></tr><tr><th scope="row">Unit volume effect</th><td>−$3,445</td></tr><tr><th scope="row">Selling price effect</th><td>+$39,632</td></tr><tr><th scope="row">Raw-material unit cost effect</th><td>−$39,667</td></tr><tr><th scope="row">Conversion unit cost effect</th><td>−$21,786</td></tr><tr><th scope="row">Support payroll effect</th><td>−$31,542</td></tr><tr><th scope="row">SG&amp;A effect</th><td>−$7,737</td></tr><tr class="total"><th scope="row">Simulated actual EBITDA</th><td>$153,932</td></tr></tbody></table></div><p class="source">Source: Variance!D18:D26. Rounded rows may differ by $1 from the total.</p></div><div class="analysis"><h4>Reading the bridge</h4><p>The $39,632 selling-price benefit is almost fully offset by the $39,667 increase from material unit costs. Conversion costs and support payroll add further pressure.</p><p>This is why I would review material costs and hiring alongside sales. Reporting revenue alone would miss the deterioration in operating profit.</p><p class="small">The SG&amp;A line contains its full variance, including variable selling expenses. The price line is a revenue effect before those expenses.</p></div></div>
+</div>
+</details>
+
+<details class="evidence-panel" id="cash-details">
+<summary>Cash calculation and monthly balances</summary>
+<div class="evidence-content">
+<h3>Positive EBITDA, negative cash flow</h3><p>The outlook produces $226,663 of EBITDA, but $536,946 of additional net working capital and $369,000 of capital expenditure (CapEx), or equipment spending, use more cash than the operation generates.</p><div class="equation">$226,663 − $536,946 − $369,000 = <strong>−$679,283</strong><span>EBITDA − increase in net working capital − CapEx = cash flow before tax and financing</span></div><p>Opening cash of $750,000 plus cash flow of −$679,283 leaves $70,717 at year-end.</p><h4>Monthly cash balances</h4><div class="table-scroll" tabindex="0" role="region" aria-label="Monthly cash balances"><table class="numeric narrow"><thead><tr><th>Period</th><th>Ending cash</th></tr></thead><tbody><tr><th scope="row">Opening</th><td>$750,000</td></tr><tr><th scope="row">Jan</th><td>$307,191</td></tr><tr><th scope="row">Feb</th><td>$297,450</td></tr><tr><th scope="row">Mar</th><td>$235,588</td></tr><tr><th scope="row">Apr</th><td>$275,594</td></tr><tr><th scope="row">May</th><td>$227,024</td></tr><tr><th scope="row">Jun</th><td>$272,793</td></tr><tr><th scope="row">Jul</th><td>$279,164</td></tr><tr><th scope="row">Aug</th><td>$277,102</td></tr><tr><th scope="row">Sep</th><td>$247,419</td></tr><tr><th scope="row">Oct</th><td>$194,729</td></tr><tr><th scope="row">Nov</th><td>$129,776</td></tr><tr><th scope="row">Dec</th><td>$70,717</td></tr></tbody></table></div><p class="source">Source: Assumptions!D30 and Cash flow!F29:Q29. Cash flow before tax and financing: Cash flow!D22:D29.</p><p>The large January cash outflow partly reflects the opening working-capital balances being below the first month’s modeled run rate. I would validate those opening balances before using the model for a real cash decision.</p><p><strong>Conclusion:</strong> positive EBITDA does not mean the company can fund all of its investment needs. Receivable collection, inventory levels and the timing of equipment spending all matter.</p>
+</div>
+</details>
+
+<details class="evidence-panel" id="scenario-details">
+<summary>Scenario and sensitivity analysis</summary>
+<div class="evidence-content">
+<h3>What if materials cost 8% more and volume falls 5%?</h3><p>The Scenario sheet applies this stress to the original annual budget. Selling price, support payroll and fixed SG&amp;A remain unchanged. Conversion cost and variable SG&amp;A decrease with activity.</p><div class="scenario-result"><div><span>Budget EBITDA</span><strong>$348,850</strong></div><div><span>Stressed EBITDA</span><strong>$20,149</strong></div><div><span>Change</span><strong class="negative">−94.2%</strong></div></div><p>EBITDA falls by <strong>$328,700</strong>. Material spending still rises by $59,775: the combination of 5% lower volume and 8% higher unit cost is 0.95 × 1.08 = 1.026, or a 2.6% increase in material spending.</p><p>The workbook also includes a sensitivity grid for volume changes from −10% to +5% and material-cost changes from 0% to +12%. At −5% volume and +12% material cost, annual EBITDA becomes negative at −$67,214.</p><p class="source">Source: Scenario!D7:D9, F12:H20 and F25:I29. This test measures annual budget EBITDA, not a separate cash forecast. Figures are rounded independently; subtracting displayed endpoints may differ by $1 from the rounded change.</p><h4>Show the scenario calculation from Excel</h4><figure class="workbook-view"><a href="/assets/scenario.png" target="_blank" rel="noopener"><img src="/assets/scenario.png" alt="Scenario worksheet with input changes and budget versus stress EBITDA calculations." loading="lazy" width="1200" height="650"></a><figcaption>Scenario worksheet excerpt. Select the image to enlarge.</figcaption></figure><p><strong>Conclusion:</strong> the budget’s 5.1% EBITDA margin leaves limited room for adverse changes. A volume decline reduces contribution while payroll and fixed SG&amp;A remain in place.</p>
+</div>
+</details>
+
+<details class="evidence-panel" id="formulas-details">
+<summary>Excel formulas, reconciliation checks, and model limits</summary>
+<div class="evidence-content">
+<h3>How the worksheets connect</h3><p>Assumptions and Actuals feed Budget, Forecast and Headcount. Working capital and CapEx then feed Cash flow. Dashboard, Variance and Scenario summarize the results. Checks reviews the calculations without feeding operating formulas.</p><div class="formula-list">
+<article><h4>Revenue</h4><code>Budget!F10 = F8*F9</code><p>January: 4,150 units × $135 = $560,250.</p></article>
+<article><h4>Cost of goods sold</h4><code>Budget!F16 = SUM(F14:F15)</code><p>Materials ($186,750) + conversion costs ($103,750) = $290,500. Direct production labor is already included in conversion cost.</p></article>
+<article><h4>Support payroll</h4><code>Headcount!F16 = F13*F14/'Assumptions'!$D$35*(1+F15)</code><p>Average FTE × annual salary ÷ 12 × (1 + burden). January: 20 × $84,000 ÷ 12 × 1.20 = $168,000. Averaging opening and closing FTE approximates mid-month hiring.</p></article>
+<article><h4>EBITDA</h4><code>Budget!F27 = F17-F21-F25</code><p>Gross profit − support payroll − SG&amp;A. CapEx is a cash outflow, not an EBITDA expense.</p></article>
+<article><h4>Working capital</h4><code>'Working capital'!F15 = F8*F11/'Assumptions'!$D$34</code><p>Receivables = monthly revenue × receivable days ÷ 30. Inventory and payables use COGS as a simplified run rate. Net working capital = receivables + inventory − payables.</p></article>
+<article><h4>Cash rollforward</h4><code>'Cash flow'!F29 = F28+F26</code><p>Opening cash + cash flow = closing cash. The next month starts with the previous month’s closing balance.</p></article>
+</div><h4>Techniques demonstrated</h4><p>Cross-sheet references, absolute and mixed cell references, monthly rollforwards, <code>SUM</code>, <code>AVERAGE</code>, <code>IF</code>, <code>ABS</code>, <code>ROUND</code> and <code>SUMPRODUCT</code>. Annual margins divide annual profit by annual revenue, rather than averaging monthly percentages. Ending balances use December rather than the sum of 12 months.</p><p>The workbook has <strong>12 reconciliation checks</strong> covering revenue, EBITDA, payroll, working capital, cash and the scenario. All show OK in the reviewed copy. These confirm internal consistency; they do not establish that the assumptions are realistic.</p><p class="source">Source: Checks!C7:F18. Formula examples are taken directly from the downloadable workbook.</p><h4>Model scope and limitations</h4><ul><li>One product group and 30-day planning months.</li><li>Conversion costs are modeled per unit; this simplifies production cost behavior.</li><li>Inventory and supplier payables use COGS-based estimates rather than a purchasing ledger.</li><li>Payroll and SG&amp;A are paid in the month incurred.</li><li>No tax, interest, financing, depreciation or net-income schedule. Cash flow is before tax and financing.</li></ul>
+</div>
+</details>
+
+    </section>
+  </main>
+  <footer>
+    <div class="container">
+      <strong>Mohamed Saffiddine</strong>
+      <p class="small">Mechanical Engineering Technology student · CUNY City Tech</p>
+      <p class="small">Independent learning project. Northstar Components and all company data are fictional.</p>
+      <a class="small" href="#main">Back to top</a>
+    </div>
+  </footer>
+</body>
+</html>
